@@ -28,25 +28,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        showList();
         makeApiCall();
     }
 
-    private void showList() {
+    private void showList(final List<Pokemon> pokemonList) {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        final List<String> input = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            input.add("Item number " + i);
-        }
-
         // define an adapter
-        mAdapter = new ListAdapter(input);
+        mAdapter = new ListAdapter(pokemonList);
         recyclerView.setAdapter(mAdapter);
 
         //Swipe to dismiss block
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        input.remove(viewHolder.getAdapterPosition());
+                        pokemonList.remove(viewHolder.getAdapterPosition());
                         mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }
                 };
@@ -85,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<RestPokemonResponse> call, Response<RestPokemonResponse> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     List<Pokemon> pokemonList = response.body().getResults();
-                    Toast.makeText(getApplicationContext(),"API Success", Toast.LENGTH_LONG).show();
+                    showList(pokemonList);
                 } else {
                     showError();
                 }
