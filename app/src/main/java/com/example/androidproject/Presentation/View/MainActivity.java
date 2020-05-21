@@ -13,6 +13,8 @@ import com.example.androidproject.Presentation.Controller.MainController;
 import com.example.androidproject.Presentation.Model.Pokemon;
 import com.example.androidproject.R;
 import com.example.androidproject.Singletons;
+import com.example.androidproject.data.PokeApi;
+import com.example.androidproject.data.PokeRepository;
 
 import java.util.List;
 
@@ -25,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         controller = new MainController(
-                this,
-                Singletons.getGson(),
-                Singletons.getSharedPreferences(getApplicationContext())
+               this,
+                new PokeRepository(Singletons.getPokeApi(),
+                        Singletons.getSharedPreferences(getApplicationContext()),
+                        Singletons.getGson()
+                        )
+
+
         );
         controller.onStart() ;
-
-
     }
 
     public void showList(final List<Pokemon> pokemonList) {
