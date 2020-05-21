@@ -25,6 +25,8 @@ public class DetailActivity extends AppCompatActivity {
         String pokemonJson = intent.getStringExtra(Constants.KEY_POKEMON);
         Pokemon pokemon = Singletons.getGson().fromJson(pokemonJson, Pokemon.class);
         showDetail(pokemon);
+
+
     }
 
     private void showDetail(Pokemon pokemon) {
