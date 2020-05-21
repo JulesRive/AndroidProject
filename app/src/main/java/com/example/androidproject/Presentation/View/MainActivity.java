@@ -1,6 +1,5 @@
 package com.example.androidproject.Presentation.View;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -13,7 +12,6 @@ import com.example.androidproject.Presentation.Controller.MainController;
 import com.example.androidproject.Presentation.Model.Pokemon;
 import com.example.androidproject.R;
 import com.example.androidproject.Singletons;
-import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -43,7 +41,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // define an adapter
-        mAdapter = new ListAdapter(pokemonList);
+        mAdapter = new ListAdapter(pokemonList, new ListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Pokemon item) {
+                controller.onItemClick(item);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
 
         //Swipe to dismiss block
@@ -67,4 +70,10 @@ public class MainActivity extends AppCompatActivity {
     public void showError() {
         Toast.makeText(getApplicationContext(), "API Error", Toast.LENGTH_SHORT).show();
     }
+
+    public void navigateToDetails(Pokemon pokemon) {
+
+    }
 }
+
+
