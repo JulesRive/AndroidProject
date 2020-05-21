@@ -1,7 +1,8 @@
-package com.example.androidproject;
+package com.example.androidproject.data;
+import com.example.androidproject.Presentation.Model.RestPokemonResponse;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public interface PokeApi {
     @GET("/api/v2/pokemon")
